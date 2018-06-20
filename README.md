@@ -30,7 +30,7 @@
     
 ### make it work
     Finally you made it ! run 
-    python start.py
+    python2 start.py
     in command line to see results.
         
     project3.py is the database_query class definition.
