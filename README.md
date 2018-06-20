@@ -1,7 +1,7 @@
 # Udacity FullStack Project3 LogsAnlysis
 
 ## Dependency 
-### python 3.6.5
+### python 2.7
     install python here https://www.python.org/downloads/
     python pakage psycopg2 here http://initd.org/psycopg/docs/install.html
 ### Linux-based Virtual Machine
