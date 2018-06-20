@@ -1,16 +1,18 @@
 # Udacity FullStack Project3 LogsAnlysis
 
 ## Dependency 
-    ### python 3.6.5
-        python pakage psycopg2
-    ### Virtual Machine
-        vagrant install here https://www.vagrantup.com/ Follow instructions there.
+### python 3.6.5
+    install python here https://www.python.org/downloads/
+    python pakage psycopg2 here http://initd.org/psycopg/docs/install.html
+### Linux-based Virtual Machine
+    vagrant download here https://www.vagrantup.com/downloads.html.
+    Under the downloaded directionary. Bring the virtual machine back online (with vagrant up). Then log into it with vagrant ssh.
 
 ## Installtion
-    ### Load the data
-        Unzip newsdata.zip to newsdata.sql. To load the data, cd into the vagrant directory and use the command psql -d news -f newsdata.sql.
-    ### make it work
-        run project3.py
+### Load the data
+    Unzip newsdata.zip to the vagrant directory, which is shared with your virtual machine. To load the data, cd into the vagrant directory and use the command psql -d news -f newsdata.sql.
+### make it work
+    run project3.py
 
 ## Description
     The user-facing newspaper site frontend itself, and the database behind it, are already built and running. 
@@ -35,7 +37,7 @@
     2016-07-17 2.3% errors
 
 ## Addition
-    ### Create View
+### Create View
     Create views are embbed in the program. So once you run it it will create it automatically.
     But to make it clear:
     
