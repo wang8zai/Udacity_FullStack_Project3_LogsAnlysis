@@ -29,7 +29,12 @@
     Copy them into the command line and press enter to create views.
     
 ### make it work
-    Finally you made it ! run python project3.py in command line to see results.
+    Finally you made it ! run 
+    python start.py
+    in command line to see results.
+        
+    project3.py is the database_query class definition.
+    start.py make an instance of databaes_query and perform queries.
 
 ## Description
 
@@ -38,6 +43,7 @@
     The database contains newspaper articles, as well as the web server log for the site. The log has a database row for each time a reader loaded a web page. 
     Using that information, your code will answer questions about the site's user activity. The program in this project run from the command line. It won't take any input from the user. 
     Instead, it will connect to that database, use SQL queries to analyze the log data, and print out the answers to some questions.
+
         
 ## Results
 
