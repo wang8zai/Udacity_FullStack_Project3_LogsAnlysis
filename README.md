@@ -13,7 +13,11 @@
         run project3.py
 
 ## Description
-    The user-facing newspaper site frontend itself, and the database behind it, are already built and running. Build an internal reporting tool that will use information from the database to discover what kind of articles the site's readers like. The database contains newspaper articles, as well as the web server log for the site. The log has a database row for each time a reader loaded a web page. Using that information, your code will answer questions about the site's user activity. The program in this project run from the command line. It won't take any input from the user. Instead, it will connect to that database, use SQL queries to analyze the log data, and print out the answers to some questions.
+    The user-facing newspaper site frontend itself, and the database behind it, are already built and running. 
+    Build an internal reporting tool that will use information from the database to discover what kind of articles the site's readers like. 
+    The database contains newspaper articles, as well as the web server log for the site. The log has a database row for each time a reader loaded a web page. 
+    Using that information, your code will answer questions about the site's user activity. The program in this project run from the command line. It won't take any input from the user. 
+    Instead, it will connect to that database, use SQL queries to analyze the log data, and print out the answers to some questions.
         
 ## Results
     Most popular three articles of all time
@@ -33,3 +37,30 @@
 ## Addition
     ### Create View
     Create views are embbed in the program. So once you run it it will create it automatically.
+    But to make it clear:
+    
+    valid_articles = """CREATE VIEW valid_articles
+    AS SELECT REPLACE(path, '/article/', '') as path,
+    count(*) as cnt FROM log, articles
+    WHERE path LIKE '/article/%'
+    AND REPLACE(path, '/article/', '') = articles.slug
+    GROUP BY path ORDER BY cnt DESC"""
+
+    valid_authors = """CREATE VIEW valid_authors
+        AS SELECT author, sum(cnt) AS acnt
+        FROM valid_articles, articles
+        WHERE valid_articles.path = articles.slug
+        GROUP BY author
+        ORDER BY acnt DESC"""
+
+    all_status = """CREATE VIEW all_status
+        AS SELECT CAST(time AS DATE) AS day, count(*) AS cnt
+        FROM log
+        GROUP BY day"""
+
+    error_status = """CREATE VIEW error_status
+        AS SELECT CAST(time AS DATE) AS day, count(*) AS cnt
+        FROM log
+        WHERE CAST(SUBSTRING(status, 1, 3) AS INTEGER) != 200
+        GROUP BY day"""
+
