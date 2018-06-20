@@ -63,10 +63,9 @@
     But to make it clear:
     
     CREATE VIEW valid_articles
-    AS SELECT REPLACE(path, '/article/', '') as path,
+    AS SELECT REPLACE(log.path, '/article/', '') as path,
     count(*) as cnt FROM log, articles
-    WHERE path LIKE '/article/%'
-    AND REPLACE(path, '/article/', '') = articles.slug
+    WHERE log.path = CONCAT('/article/', articles.slug)
     GROUP BY path ORDER BY cnt DESC;
 
     CREATE VIEW valid_authors
