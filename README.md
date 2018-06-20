@@ -10,13 +10,29 @@
     Then log into it with vagrant ssh.
 
 ## Installtion
+
+### Prerequisite
+    1. Make sure you have installed vagrant. 
+    2. You need to unzip vagrant and use cd to enter the unzip foller location.
+    3. Bring the virtual machine back online. Using command line: vagrant up
+    4. Log into virtual machine: vagrant ssh
+    
 ### Load the data
-    Unzip newsdata.zip to the vagrant directory, which is shared with your virtual machine.
-    To load the data, cd into the vagrant directory and use the command psql -d news -f newsdata.sql.
+    1. Unzip newsdata.zip to the vagrant directory, which is shared with your virtual machine.
+    2. Get into vagrant directary: cd /vagrant
+    3. load the data: psql -d news -f newsdata.sql
+    
+### Create view
+    Before get into the program you need to create view.
+    1. Connect to database called news: psql -d news
+    2. You are now connected to the database. See addition below you will find four CREATE VIEWs.
+    Copy them into the command line and press enter to create views.
+    
 ### make it work
-    run project3.py
+    Finally you made it ! run python project3.py in command line to see results.
 
 ## Description
+
     The user-facing newspaper site frontend itself, and the database behind it, are already built and running. 
     Build an internal reporting tool that will use information from the database to discover what kind of articles the site's readers like. 
     The database contains newspaper articles, as well as the web server log for the site. The log has a database row for each time a reader loaded a web page. 
@@ -24,6 +40,7 @@
     Instead, it will connect to that database, use SQL queries to analyze the log data, and print out the answers to some questions.
         
 ## Results
+
     Most popular three articles of all time
     Candidate is jerk, alleges rival -- 338647 views
     Bears love berries, alleges bear -- 253801 views
@@ -39,32 +56,34 @@
     2016-07-17 2.3% errors
 
 ## Addition
+
 ### Create View
+
     Create views are embbed in the program. So once you run it it will create it automatically.
     But to make it clear:
     
-    valid_articles = """CREATE VIEW valid_articles
+    CREATE VIEW valid_articles
     AS SELECT REPLACE(path, '/article/', '') as path,
     count(*) as cnt FROM log, articles
     WHERE path LIKE '/article/%'
     AND REPLACE(path, '/article/', '') = articles.slug
-    GROUP BY path ORDER BY cnt DESC"""
+    GROUP BY path ORDER BY cnt DESC;
 
-    valid_authors = """CREATE VIEW valid_authors
-        AS SELECT author, sum(cnt) AS acnt
-        FROM valid_articles, articles
-        WHERE valid_articles.path = articles.slug
-        GROUP BY author
-        ORDER BY acnt DESC"""
+    CREATE VIEW valid_authors
+    AS SELECT author, sum(cnt) AS acnt
+    FROM valid_articles, articles
+    WHERE valid_articles.path = articles.slug
+    GROUP BY author
+    ORDER BY acnt DESC;
 
-    all_status = """CREATE VIEW all_status
-        AS SELECT CAST(time AS DATE) AS day, count(*) AS cnt
-        FROM log
-        GROUP BY day"""
+    CREATE VIEW all_status
+    AS SELECT CAST(time AS DATE) AS day, count(*) AS cnt
+    FROM log
+    GROUP BY day;
 
-    error_status = """CREATE VIEW error_status
-        AS SELECT CAST(time AS DATE) AS day, count(*) AS cnt
-        FROM log
-        WHERE CAST(SUBSTRING(status, 1, 3) AS INTEGER) != 200
-        GROUP BY day"""
+    CREATE VIEW error_status
+    AS SELECT CAST(time AS DATE) AS day, count(*) AS cnt
+    FROM log
+    WHERE CAST(SUBSTRING(status, 1, 3) AS INTEGER) != 200
+    GROUP BY day;
 
